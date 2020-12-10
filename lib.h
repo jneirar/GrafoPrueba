@@ -24,14 +24,16 @@
 #define NOMINMAX
 #endif
 
-#define returnDijkstraType std::unordered_map<Vertex<TV, TE>*, std::pair<Vertex<TV, TE>*, TE>>
-
 #define distanceMatrixType std::unordered_map<Vertex<TV, TE>*, std::unordered_map<Vertex<TV, TE>*, TE>>
 #define pathMatrixType std::unordered_map<Vertex<TV, TE>*, std::unordered_map<Vertex<TV, TE>*, Vertex<TV, TE>*>>
 #define returnFloydWarshallType std::pair<distanceMatrixType, pathMatrixType>
 
 #define distanceUnorderedMapType std::unordered_map<Vertex<TV, TE>*, TE>
+#define distanceUnorderedMapAStarType std::unordered_map<Vertex<TV, TE>*, std::pair<TE, TE>>
 #define parentUnorderedMapType std::unordered_map<Vertex<TV, TE>*, Vertex<TV, TE>*>
+
+#define returnDijkstraType std::unordered_map<Vertex<TV, TE>*, std::pair<Vertex<TV, TE>*, TE>>
+#define returnAStarType std::pair<distanceUnorderedMapAStarType, parentUnorderedMapType>
 #define returnBellmanFordType std::pair<distanceUnorderedMapType, parentUnorderedMapType>
 
 bool check(int option, int inf, int sup){

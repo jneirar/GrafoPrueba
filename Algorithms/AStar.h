@@ -7,11 +7,13 @@ template<typename TV, typename TE>
 class AStar{
 private:
     std::unordered_map<std::string, Vertex<TV, TE>*> vertexes;
-    void AStarAlgorithm(returnDijkstraType &result, std::string id);
-    #define INF std::numeric_limits<TE>::max();
+    void AStarAlgorithm(distanceUnorderedMapAStarType &distancesAStar, 
+                        parentUnorderedMapType &parents, 
+                        std::unordered_map<std::string, TE> hn,
+                        std::string idFrom, std::string idTo);
 public:
     AStar(Graph<TV, TE>* graph);
-    returnDijkstraType apply(std::string id);
+    returnAStarType apply(std::string idFrom, std::string idTo, std::unordered_map<std::string, TE> hn);
 };
 
 template<typename TV, typename TE>
@@ -30,37 +32,41 @@ AStar<TV, TE>::AStar(Graph<TV, TE>* graph){
 }
 
 template<typename TV, typename TE>
-void AStar<TV, TE>::AStarAlgorithm(returnDijkstraType &result, std::string id){
+void AStar<TV, TE>::AStarAlgorithm(distanceUnorderedMapAStarType &distancesAStar, parentUnorderedMapType &parents, std::unordered_map<std::string, TE> hn, std::string idFrom, std::string idTo){
     std::priority_queue<
         std::pair<Vertex<TV, TE>*, TE>, 
         std::vector<std::pair<Vertex<TV, TE>*, TE> >, 
         ComparePairVertexTE<TV, TE>> pq;
-    
     std::unordered_map<Vertex<TV, TE>*, bool> visited;
-    for(auto p : this->vertexes){
-        result[p.second].first = nullptr;
-        result[p.second].second = INF;
-        visited[p.second] = false;
-    }   
-    result[this->vertexes[id]].first = this->vertexes[id];
-    result[this->vertexes[id]].second = 0;
+    for(auto p : this->vertexes)    visited[p.second] = false;
+    parents[this->vertexes[idFrom]] = this->vertexes[idFrom];
     
-    pq.push(std::make_pair(this->vertexes[id], 0));
+    pq.push(std::make_pair(this->vertexes[idFrom], 0 + hn[idFrom]));
+    distancesAStar[this->vertexes[idFrom]] = std::make_pair(0, hn[idFrom]);
 
     while(!pq.empty()){
-        std::pair<Vertex<TV, TE>*, TE> cur = pq.top();
+        Vertex<TV, TE>* curVertex = pq.top().first;
+        TE fn = pq.top().second;
         pq.pop();
-        if(visited[cur.first])
+        if(visited[curVertex])
             continue;
         
-        visited[cur.first] = true;
+        visited[curVertex] = true;
+        if(curVertex->id == idTo) break;
 
-        for(Edge<TV, TE>* edge : cur.first->edges){
-            if(!visited[edge->vertexes[1]]){
-                if(result[cur.first].second + edge->weight < result[edge->vertexes[1]].second){
-                    result[edge->vertexes[1]].second = result[cur.first].second + edge->weight;
-                    pq.push(std::make_pair(edge->vertexes[1], result[edge->vertexes[1]].second));
-                    result[edge->vertexes[1]].first = cur.first;
+        for(Edge<TV, TE>* edge : curVertex->edges){
+            Vertex<TV, TE>* toVertex = edge->vertexes[1];
+            if(!visited[toVertex]){
+                if(distancesAStar.count(toVertex)){
+                    if(edge->weight + distancesAStar[curVertex].first + hn[toVertex->id] < distancesAStar[toVertex].second){
+                        distancesAStar[toVertex] = std::make_pair(edge->weight + distancesAStar[curVertex].first, edge->weight + distancesAStar[curVertex].first + hn[toVertex->id]);
+                        parents[toVertex] = curVertex;
+                        pq.push(std::make_pair(toVertex, distancesAStar[toVertex].second));
+                    }
+                }else{
+                    parents[toVertex] = curVertex;
+                    distancesAStar[toVertex] = std::make_pair(edge->weight + distancesAStar[curVertex].first, edge->weight + distancesAStar[curVertex].first + hn[toVertex->id]);
+                    pq.push(std::make_pair(toVertex, distancesAStar[toVertex].second));
                 }
             }
         }
@@ -68,19 +74,21 @@ void AStar<TV, TE>::AStarAlgorithm(returnDijkstraType &result, std::string id){
 }
 
 template<typename TV, typename TE>
-returnDijkstraType AStar<TV, TE>::apply(std::string id){
-    returnDijkstraType result;
+returnAStarType AStar<TV, TE>::apply(std::string idFrom, std::string idTo, std::unordered_map<std::string, TE> hn){
+    distanceUnorderedMapAStarType distancesAStar;
+    parentUnorderedMapType parents;
     
-    if(!this->vertexes.count(id)){
-        std::cout << "ERROR: ID not found.\n";
-        return result;
+    if(!this->vertexes.count(idFrom) || !this->vertexes.count(idTo)){
+        std::cout << "ERROR: IDs not found.\n";
+        return std::make_pair(distancesAStar, parents);
     }
-
-    std::cout << "\nA* from vertex: " << this->vertexes[id]->data << "\n";
     
-    AStarAlgorithm(result, id);
+    std::cout << "\nA* from vertex: " << this->vertexes[idFrom]->data;
+    std::cout << "\nto vertex: " << this->vertexes[idTo]->data << "\n";
 
-    return result;
+    AStarAlgorithm(distancesAStar, parents, hn, idFrom, idTo);
+
+    return std::make_pair(distancesAStar, parents);
 }
 
 #endif

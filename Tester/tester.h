@@ -8,6 +8,7 @@
 #include "../Algorithms/DFS.h"
 #include "../Algorithms/SCC.h"
 #include "../Algorithms/Dijkstra.h"
+#include "../Algorithms/AStar.h"
 #include "../Algorithms/FloydWarshall.h"
 #include "../Algorithms/BellmanFord.h"
 #include "../Parser/parser.h"
@@ -40,6 +41,8 @@ namespace TestAlgorithm{
     template<typename TV, typename TE>
     void TestDijkstra(Graph<TV, TE> &graph, int i, std::string id);
     template<typename TV, typename TE>
+    void TestAStar(Graph<TV, TE> &graph, int i, std::string idFrom, std::string idTo, std::unordered_map<std::string, TE> hn);
+    template<typename TV, typename TE>
     void TestFloydWarshall(Graph<TV, TE> &graph, int i);
     template<typename TV, typename TE>
     void TestBellmanFord(Graph<TV, TE> &graph, int i, std::string id);
@@ -50,8 +53,8 @@ namespace Menu{
                    UnDirectedGraph<char, int> &ugraph3, DirectedGraph<char, int> &dgraph1,
                    DirectedGraph<char, int> &dgraph2);
     void Examples(UnDirectedGraph<char, int> &ugraph1, UnDirectedGraph<char, int> &ugraph2,
-                   UnDirectedGraph<char, int> &ugraph3, DirectedGraph<char, int> &dgraph1,
-                   DirectedGraph<char, int> &dgraph2);
+                  UnDirectedGraph<char, int> &ugraph3, UnDirectedGraph<char, int> &ugraph4,
+                  DirectedGraph<char, int> &dgraph1, DirectedGraph<char, int> &dgraph2);
     void parser(bool &cond, UnDirectedGraph<Airport, double> &graph, Parser &parser);
     template<typename TV, typename TE>
     void Creator(int &option, Graph<TV, TE>* &graph);
@@ -189,6 +192,35 @@ namespace Tester{
         ugraph3.createEdge("F", "H", 2);
         ugraph3.createEdge("G", "H", 6);
         
+        UnDirectedGraph<char, int>  ugraph4;
+        ugraph4.insertVertex("A", 'A');
+        ugraph4.insertVertex("B", 'B');
+        ugraph4.insertVertex("C", 'C');
+        ugraph4.insertVertex("D", 'D');
+        ugraph4.insertVertex("E", 'E');
+        ugraph4.insertVertex("F", 'F');
+        ugraph4.insertVertex("G", 'G');
+        ugraph4.insertVertex("H", 'H');
+        ugraph4.insertVertex("I", 'I');
+        ugraph4.createEdge("A", "B", 22);
+        ugraph4.createEdge("A", "C", 9);
+        ugraph4.createEdge("A", "D", 12);
+        ugraph4.createEdge("B", "C", 35);
+        ugraph4.createEdge("B", "F", 36);
+        ugraph4.createEdge("B", "H", 34);
+        ugraph4.createEdge("C", "D", 4);
+        ugraph4.createEdge("C", "E", 65);
+        ugraph4.createEdge("C", "F", 42);
+        ugraph4.createEdge("D", "E", 33);
+        ugraph4.createEdge("D", "I", 30);
+        ugraph4.createEdge("E", "F", 18);
+        ugraph4.createEdge("E", "G", 23);
+        ugraph4.createEdge("F", "G", 39);
+        ugraph4.createEdge("F", "H", 24);
+        ugraph4.createEdge("G", "H", 25);
+        ugraph4.createEdge("G", "I", 21);
+        ugraph4.createEdge("H", "I", 19);
+
         DirectedGraph<char, int> dgraph1;
         dgraph1.insertVertex("A", 'A');
         dgraph1.insertVertex("B", 'B');
@@ -236,7 +268,7 @@ namespace Tester{
         dgraph2.createEdge("H", "D", 1);
         dgraph2.createEdge("H", "G", 1);
 
-        Menu::Examples(ugraph1, ugraph2, ugraph3, dgraph1, dgraph2);
+        Menu::Examples(ugraph1, ugraph2, ugraph3, ugraph4, dgraph1, dgraph2);
     }
 
     void executeParser(bool cond){
@@ -360,8 +392,8 @@ namespace Menu{
         }while(option1 != 5);
     }
     void Examples(UnDirectedGraph<char, int> &ugraph1, UnDirectedGraph<char, int> &ugraph2,
-                   UnDirectedGraph<char, int> &ugraph3, DirectedGraph<char, int> &dgraph1,
-                   DirectedGraph<char, int> &dgraph2){
+                  UnDirectedGraph<char, int> &ugraph3, UnDirectedGraph<char, int> &ugraph4,
+                  DirectedGraph<char, int> &dgraph1, DirectedGraph<char, int> &dgraph2){
         int option;
         do{
             do{
@@ -385,11 +417,12 @@ namespace Menu{
                 std::cout << "\t17. Test Floyd Warshall 2.\n";
                 std::cout << "\t18. Test Bellman Ford 1.\n";
                 std::cout << "\t19. Test Bellman Ford 2.\n";
-                std::cout << "\t20. Back\n";
+                std::cout << "\t20. Test AStar 1.\n";
+                std::cout << "\t21. Back\n";
                 std::cout << "\nSelect option: ";
                 option = validInt();
                 console_clear();
-            }while(!check(option, 1, 20));
+            }while(!check(option, 1, 21));
             menu2();
             
             switch(option){
@@ -488,10 +521,26 @@ namespace Menu{
                     pause();
                     break;
                 }
+                case 20:{
+                    std::unordered_map<std::string, int> hn;
+                    hn["A"] = 36;
+                    hn["B"] = 39;
+                    hn["C"] = 31;
+                    hn["D"] = 30;
+                    hn["E"] = 34;
+                    hn["F"] = 32;
+                    hn["G"] = 21;
+                    hn["H"] = 19;
+                    hn["I"] = 0;
+
+                    TestAlgorithm::TestAStar(ugraph4, 1, "A", "I", hn);
+                    pause();
+                    break;
+                }
                 default:
                     break;
             }
-        }while(option != 20);
+        }while(option != 21);
     }
 
     void parser(bool &cond, UnDirectedGraph<Airport, double> &graph, Parser &parser){
@@ -931,6 +980,22 @@ namespace TestAlgorithm{
             else
                 std::cout << "Vertex: " << p.first->data << " (Parent: NA): " << p.second.second << "\n";
         }
+    }
+
+    template<typename TV, typename TE>
+    void TestAStar(Graph<TV, TE> &graph, int i, std::string idFrom, std::string idTo, std::unordered_map<std::string, TE> hn){
+        std::cout << "\n----------------Graph " << i << "---------------\n";
+        graph.display();
+        
+        std::cout << "\n-----------A* Test " << i << "------------\n";
+        AStar<char, int> astar(&graph);
+        returnAStarType res0 = astar.apply(idFrom, idTo, hn);
+        distanceUnorderedMapAStarType distances = res0.first;
+        parentUnorderedMapType parents = res0.second;
+        
+        std::cout << "\nResultado A*:\n";
+        for(auto p : distances)
+            std::cout << p.first->data << " -> G(n): " << p.second.first << " | F(n): " << p.second.second << " Parent: " << parents[p.first]->data << "\n";
     }
     
     template<typename TV, typename TE>

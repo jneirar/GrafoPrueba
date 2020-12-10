@@ -32,7 +32,7 @@
 #define distanceUnorderedMapAStarType std::unordered_map<Vertex<TV, TE>*, std::pair<TE, TE>>
 #define parentUnorderedMapType std::unordered_map<Vertex<TV, TE>*, Vertex<TV, TE>*>
 
-#define returnDijkstraType std::unordered_map<Vertex<TV, TE>*, std::pair<Vertex<TV, TE>*, TE>>
+#define returnDijkstraType std::pair<parentUnorderedMapType, distanceUnorderedMapType>
 #define returnAStarType std::pair<distanceUnorderedMapAStarType, parentUnorderedMapType>
 #define returnBellmanFordType std::pair<distanceUnorderedMapType, parentUnorderedMapType>
 

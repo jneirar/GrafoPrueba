@@ -2,16 +2,9 @@
 #define TESTER_H
 
 #include "../lib.h"
-#include "../Algorithms/Kruskal.h"
-#include "../Algorithms/Prim.h"
-#include "../Algorithms/BFS.h"
-#include "../Algorithms/DFS.h"
-#include "../Algorithms/SCC.h"
-#include "../Algorithms/Dijkstra.h"
-#include "../Algorithms/AStar.h"
-#include "../Algorithms/FloydWarshall.h"
-#include "../Algorithms/BellmanFord.h"
 #include "../Parser/parser.h"
+#include "TestAlgorithm.h"
+#include "TestGraphs.h"
 
 template<typename TV, typename TE>
 void showGraph(UnDirectedGraph<TV, TE> &graph){
@@ -23,29 +16,6 @@ void showGraph(UnDirectedGraph<TV, TE> &graph){
         graph.display();
         isConnectedMsg(graph.isConnected());
     }
-}
-
-namespace TestAlgorithm{
-    template<typename TV, typename TE>
-    void TestKruskalPrim(UnDirectedGraph<TV, TE> &graph, int i, std::string id, bool complete);
-    template<typename TV, typename TE>
-    void TestBFS(UnDirectedGraph<TV, TE> &graph, int i, std::string id, bool complete);
-    template<typename TV, typename TE>
-    void TestBFS(DirectedGraph<TV, TE> &graph, int i, std::string id, bool complete);
-    template<typename TV, typename TE>
-    void TestDFS(UnDirectedGraph<TV, TE> &graph, int i, std::string id, bool complete);
-    template<typename TV, typename TE>
-    void TestDFS(DirectedGraph<TV, TE> &graph, int i, std::string id, bool complete);
-    template<typename TV, typename TE>
-    void TestCSS(DirectedGraph<TV, TE> &graph, int i);
-    template<typename TV, typename TE>
-    void TestDijkstra(Graph<TV, TE> &graph, int i, std::string id);
-    template<typename TV, typename TE>
-    void TestAStar(Graph<TV, TE> &graph, int i, std::string idFrom, std::string idTo, std::unordered_map<std::string, TE> hn);
-    template<typename TV, typename TE>
-    void TestFloydWarshall(Graph<TV, TE> &graph, int i);
-    template<typename TV, typename TE>
-    void TestBellmanFord(Graph<TV, TE> &graph, int i, std::string id);
 }
 
 namespace Menu{
@@ -62,212 +32,16 @@ namespace Menu{
 
 namespace Tester{
     void executeFunctionExamples(){
-        UnDirectedGraph<char, int>  ugraph1;
-        ugraph1.insertVertex("1", '1');
-        ugraph1.insertVertex("2", '2');
-        ugraph1.insertVertex("3", '3');
-        ugraph1.insertVertex("4", '4');
-        ugraph1.createEdge("1", "2", 1);
-        ugraph1.createEdge("1", "3", 1);
-        ugraph1.createEdge("2", "3", 1);
-        ugraph1.createEdge("2", "4", 1);
-        
-        UnDirectedGraph<char, int>  ugraph2;
-        ugraph2.insertVertex("1", '1');
-        ugraph2.insertVertex("2", '2');
-        ugraph2.insertVertex("3", '3');
-        ugraph2.insertVertex("4", '4');
-        ugraph2.insertVertex("5", '5');
-        ugraph2.insertVertex("6", '6');
-        ugraph2.createEdge("1", "2", 1);
-        ugraph2.createEdge("1", "3", 1);
-        ugraph2.createEdge("2", "3", 1);
-        ugraph2.createEdge("2", "4", 1);
-        ugraph2.createEdge("5", "6", 1);
-
-        UnDirectedGraph<char, int>  ugraph3;
-        ugraph3.insertVertex("1", '1');
-        ugraph3.insertVertex("2", '2');
-        ugraph3.insertVertex("3", '3');
-        ugraph3.insertVertex("4", '4');
-        ugraph3.insertVertex("5", '5');
-        ugraph3.insertVertex("6", '6');
-        ugraph3.createEdge("1", "2", 1);
-        ugraph3.createEdge("2", "3", 1);
-        ugraph3.createEdge("3", "4", 1);
-        ugraph3.createEdge("4", "5", 1);
-        ugraph3.createEdge("5", "6", 1);
-        ugraph3.createEdge("6", "1", 1);
-
-        DirectedGraph<char, int>  dgraph1;
-        dgraph1.insertVertex("1", '1');
-        dgraph1.insertVertex("2", '2');
-        dgraph1.insertVertex("3", '3');
-        dgraph1.insertVertex("4", '4');
-        dgraph1.createEdge("1", "2", 1);
-        dgraph1.createEdge("1", "3", 1);
-        dgraph1.createEdge("2", "3", 1);
-        dgraph1.createEdge("2", "4", 1);
-
-        DirectedGraph<char, int>  dgraph2;
-        dgraph2.insertVertex("1", '1');
-        dgraph2.insertVertex("2", '2');
-        dgraph2.insertVertex("3", '3');
-        dgraph2.insertVertex("4", '4');
-        dgraph2.createEdge("1", "2", 1);
-        dgraph2.createEdge("1", "4", 1);
-        dgraph2.createEdge("2", "3", 1);
-        dgraph2.createEdge("3", "1", 1);
-        dgraph2.createEdge("4", "3", 1);
-
+        UnDirectedGraph<char, int> ugraph1, ugraph2, ugraph3;
+        DirectedGraph<char, int> dgraph1, dgraph2;
+        graphFunctions(ugraph1, ugraph2, ugraph3, dgraph1, dgraph2);
         Menu::Functions(ugraph1, ugraph2, ugraph3, dgraph1, dgraph2);
     }
 
     void executeExamples(){
-        UnDirectedGraph<char, int> ugraph1;
-        ugraph1.insertVertex("0", '0');
-        ugraph1.insertVertex("1", '1');
-        ugraph1.insertVertex("2", '2');
-        ugraph1.insertVertex("3", '3');
-        ugraph1.insertVertex("4", '4');
-        ugraph1.createEdge("0", "1", 2);
-        ugraph1.createEdge("0", "3", 6);
-        ugraph1.createEdge("1", "2", 3);
-        ugraph1.createEdge("1", "3", 8);
-        ugraph1.createEdge("1", "4", 5);
-        ugraph1.createEdge("2", "4", 7);
-        ugraph1.createEdge("3", "4", 9);
-        
-        UnDirectedGraph<char, int> ugraph2;
-        ugraph2.insertVertex("A", 'A');
-        ugraph2.insertVertex("B", 'B');
-        ugraph2.insertVertex("C", 'C');
-        ugraph2.insertVertex("D", 'D');
-        ugraph2.insertVertex("E", 'E');
-        ugraph2.insertVertex("F", 'F');
-        ugraph2.insertVertex("G", 'G');
-        ugraph2.insertVertex("H", 'H');
-        ugraph2.insertVertex("I", 'I');
-        ugraph2.insertVertex("J", 'J');
-        ugraph2.createEdge("A", "B", 3);
-        ugraph2.createEdge("A", "D", 6);
-        ugraph2.createEdge("A", "E", 9);
-        ugraph2.createEdge("B", "C", 2);
-        ugraph2.createEdge("B", "D", 4);
-        ugraph2.createEdge("B", "E", 9);
-        ugraph2.createEdge("B", "F", 9);
-        ugraph2.createEdge("C", "D", 2);
-        ugraph2.createEdge("C", "F", 8);
-        ugraph2.createEdge("C", "G", 9);
-        ugraph2.createEdge("D", "G", 9);
-        ugraph2.createEdge("E", "F", 8);
-        ugraph2.createEdge("E", "J", 18);
-        ugraph2.createEdge("F", "G", 7);
-        ugraph2.createEdge("F", "I", 9);
-        ugraph2.createEdge("F", "J", 10);
-        ugraph2.createEdge("G", "H", 4);
-        ugraph2.createEdge("G", "I", 5);
-        ugraph2.createEdge("H", "I", 1);
-        ugraph2.createEdge("H", "J", 4);
-        ugraph2.createEdge("I", "J", 3);
-    
-        UnDirectedGraph<char, int> ugraph3;
-        ugraph3.insertVertex("A", 'A');
-        ugraph3.insertVertex("B", 'B');
-        ugraph3.insertVertex("C", 'C');
-        ugraph3.insertVertex("D", 'D');
-        ugraph3.insertVertex("E", 'E');
-        ugraph3.insertVertex("F", 'F');
-        ugraph3.insertVertex("G", 'G');
-        ugraph3.insertVertex("H", 'H');
-        ugraph3.createEdge("A", "B", 1);
-        ugraph3.createEdge("A", "C", 7);
-        ugraph3.createEdge("A", "D", 10);
-        ugraph3.createEdge("B", "C", 5);
-        ugraph3.createEdge("B", "E", 8);
-        ugraph3.createEdge("C", "D", 11);
-        ugraph3.createEdge("C", "E", 9);
-        ugraph3.createEdge("D", "E", 3);;
-        ugraph3.createEdge("F", "G", 4);
-        ugraph3.createEdge("F", "H", 2);
-        ugraph3.createEdge("G", "H", 6);
-        
-        UnDirectedGraph<char, int>  ugraph4;
-        ugraph4.insertVertex("A", 'A');
-        ugraph4.insertVertex("B", 'B');
-        ugraph4.insertVertex("C", 'C');
-        ugraph4.insertVertex("D", 'D');
-        ugraph4.insertVertex("E", 'E');
-        ugraph4.insertVertex("F", 'F');
-        ugraph4.insertVertex("G", 'G');
-        ugraph4.insertVertex("H", 'H');
-        ugraph4.insertVertex("I", 'I');
-        ugraph4.createEdge("A", "B", 22);
-        ugraph4.createEdge("A", "C", 9);
-        ugraph4.createEdge("A", "D", 12);
-        ugraph4.createEdge("B", "C", 35);
-        ugraph4.createEdge("B", "F", 36);
-        ugraph4.createEdge("B", "H", 34);
-        ugraph4.createEdge("C", "D", 4);
-        ugraph4.createEdge("C", "E", 65);
-        ugraph4.createEdge("C", "F", 42);
-        ugraph4.createEdge("D", "E", 33);
-        ugraph4.createEdge("D", "I", 30);
-        ugraph4.createEdge("E", "F", 18);
-        ugraph4.createEdge("E", "G", 23);
-        ugraph4.createEdge("F", "G", 39);
-        ugraph4.createEdge("F", "H", 24);
-        ugraph4.createEdge("G", "H", 25);
-        ugraph4.createEdge("G", "I", 21);
-        ugraph4.createEdge("H", "I", 19);
-
-        DirectedGraph<char, int> dgraph1;
-        dgraph1.insertVertex("A", 'A');
-        dgraph1.insertVertex("B", 'B');
-        dgraph1.insertVertex("C", 'C');
-        dgraph1.insertVertex("D", 'D');
-        dgraph1.insertVertex("E", 'E');
-        dgraph1.insertVertex("F", 'F');
-        dgraph1.insertVertex("G", 'G');
-        dgraph1.insertVertex("H", 'H');
-        dgraph1.createEdge("A", "B", 10);
-        dgraph1.createEdge("A", "C", 8);
-        dgraph1.createEdge("B", "D", 4);
-        dgraph1.createEdge("C", "B", 8);
-        dgraph1.createEdge("C", "E", 5);
-        dgraph1.createEdge("D", "F", 5);
-        dgraph1.createEdge("E", "D", 5);
-        dgraph1.createEdge("E", "F", 7);
-        dgraph1.createEdge("F", "G", 12);
-        dgraph1.createEdge("F", "H", 4);
-        dgraph1.createEdge("G", "C", 7);
-        dgraph1.createEdge("G", "E", 2);
-        dgraph1.createEdge("G", "H", 5);
-
-        DirectedGraph<char, int> dgraph2;
-        dgraph2.insertVertex("A", 'A');
-        dgraph2.insertVertex("B", 'B');
-        dgraph2.insertVertex("C", 'C');
-        dgraph2.insertVertex("D", 'D');
-        dgraph2.insertVertex("E", 'E');
-        dgraph2.insertVertex("F", 'F');
-        dgraph2.insertVertex("G", 'G');
-        dgraph2.insertVertex("H", 'H');
-        dgraph2.createEdge("A", "B", 1);
-        dgraph2.createEdge("B", "C", 1);
-        dgraph2.createEdge("B", "E", 1);
-        dgraph2.createEdge("B", "F", 1);
-        dgraph2.createEdge("C", "D", 1);
-        dgraph2.createEdge("C", "G", 1);
-        dgraph2.createEdge("D", "C", 1);
-        dgraph2.createEdge("D", "H", 1);
-        dgraph2.createEdge("E", "A", 1);
-        dgraph2.createEdge("E", "F", 1);
-        dgraph2.createEdge("F", "G", 1);
-        dgraph2.createEdge("G", "F", 1);
-        dgraph2.createEdge("H", "D", 1);
-        dgraph2.createEdge("H", "G", 1);
-
+        UnDirectedGraph<char, int> ugraph1, ugraph2, ugraph3, ugraph4;
+        DirectedGraph<char, int> dgraph1, dgraph2;
+        graphAlgorithms(ugraph1, ugraph2, ugraph3, ugraph4, dgraph1, dgraph2);
         Menu::Examples(ugraph1, ugraph2, ugraph3, ugraph4, dgraph1, dgraph2);
     }
 
@@ -427,97 +201,97 @@ namespace Menu{
             
             switch(option){
                 case 1:{
-                    TestAlgorithm::TestKruskalPrim(ugraph1, 1, "0", false);
+                    TestKruskalPrim(ugraph1, 1, "0", false);
                     pause();
                     break;
                 }
                 case 2:{
-                    TestAlgorithm::TestKruskalPrim(ugraph2, 2, "H", false);
+                    TestKruskalPrim(ugraph2, 2, "H", false);
                     pause();
                     break;
                 }
                 case 3:{
-                    TestAlgorithm::TestKruskalPrim(ugraph3, 3, "B", true);
+                    TestKruskalPrim(ugraph3, 3, "B", true);
                     pause();
                     break;
                 }
                 case 4:{
-                    TestAlgorithm::TestBFS(ugraph1, 1, "4", false);
+                    TestBFS(ugraph1, 1, "4", false);
                     pause();
                     break;
                 }
                 case 5:{
-                    TestAlgorithm::TestBFS(ugraph2, 2, "A", false);
+                    TestBFS(ugraph2, 2, "A", false);
                     pause();
                     break;
                 }
                 case 6:{
-                    TestAlgorithm::TestBFS(ugraph3, 3, "G", true);
+                    TestBFS(ugraph3, 3, "G", true);
                     pause();
                     break;
                 }
                 case 7:{
-                    TestAlgorithm::TestBFS(dgraph1, 4, "A", false);
+                    TestBFS(dgraph1, 4, "A", false);
                     pause();
                     break;
                 }
                 case 8:{
-                    TestAlgorithm::TestDFS(ugraph1, 1, "4", false);
+                    TestDFS(ugraph1, 1, "4", false);
                     pause();
                     break;
                 }
                 case 9:{
-                    TestAlgorithm::TestDFS(ugraph2, 2, "A", false);
+                    TestDFS(ugraph2, 2, "A", false);
                     pause();
                     break;
                 }
                 case 10:{
-                    TestAlgorithm::TestDFS(ugraph3, 3, "G", true);
+                    TestDFS(ugraph3, 3, "G", true);
                     pause();
                     break;
                 }
                 case 11:{
-                    TestAlgorithm::TestDFS(dgraph1, 4, "A", false);
+                    TestDFS(dgraph1, 4, "A", false);
                     pause();
                     break;
                 }
                 case 12:{
-                    TestAlgorithm::TestCSS(dgraph1, 1);
+                    TestCSS(dgraph1, 1);
                     pause();
                     break;
                 }
                 case 13:{
-                    TestAlgorithm::TestCSS(dgraph2, 2);
+                    TestCSS(dgraph2, 2);
                     pause();
                     break;
                 }
                 case 14:{
-                    TestAlgorithm::TestDijkstra(ugraph2, 1, "A");
+                    TestDijkstra(ugraph2, 1, "A");
                     pause();
                     break;
                 }
                 case 15:{
-                    TestAlgorithm::TestDijkstra(dgraph1, 2, "D");
+                    TestDijkstra(dgraph1, 2, "D");
                     pause();
                     break;
                 }
                 case 16:{
-                    TestAlgorithm::TestFloydWarshall(ugraph1, 1);
+                    TestFloydWarshall(ugraph1, 1);
                     pause();
                     break;
                 }
                 case 17:{
-                    TestAlgorithm::TestFloydWarshall(dgraph1, 2);
+                    TestFloydWarshall(dgraph1, 2);
                     pause();
                     break;
                 }
                 case 18:{
-                    TestAlgorithm::TestBellmanFord(ugraph1, 1, "2");
+                    TestBellmanFord(ugraph1, 1, "2");
                     pause();
                     break;
                 }
                 case 19:{
-                    TestAlgorithm::TestBellmanFord(dgraph1, 2, "A");
+                    TestBellmanFord(dgraph1, 2, "A");
                     pause();
                     break;
                 }
@@ -533,7 +307,7 @@ namespace Menu{
                     hn["H"] = 19;
                     hn["I"] = 0;
 
-                    TestAlgorithm::TestAStar(ugraph4, 1, "A", "I", hn);
+                    TestAStar(ugraph4, 1, "A", "I", hn);
                     pause();
                     break;
                 }
@@ -843,206 +617,6 @@ namespace Menu{
                     break;
             }    
         }while(option1 != 13);
-    }
-}
-
-namespace TestAlgorithm{
-    template<typename TV, typename TE>
-    void TestKruskalPrim(UnDirectedGraph<TV, TE> &graph, int i, std::string id, bool complete){
-        std::cout << "\n----------------Graph " << i << "---------------\n";
-        graph.display();
-
-        std::cout << "\n------------Kruskal Test " << i << "------------\n";
-        Kruskal<char, int> kruskal(&graph);
-        UnDirectedGraph<char, int> resultK = kruskal.apply();
-        resultK.display(); 
-        isConnectedMsg(resultK.isConnected());
-
-        std::cout << "\n-----------Prim Test " << i << "(\"" << id << "\")-----------\n";
-        Prim<char, int> prim(&graph);
-        UnDirectedGraph<char, int> resultP = prim.apply(id);
-        resultP.display();
-        isConnectedMsg(resultP.isConnected());
-
-        if(resultK == resultP) std::cout << "\nPrim and Kruskal give EQUAL MST\n\n";
-        else  std::cout << "\nPrim and Kruskal give DIFFERENT MST\n\n";
-
-        if(complete){
-            UnDirectedGraph<char, int> resultPcomplete = prim.apply();
-            resultPcomplete.display();
-            isConnectedMsg(resultPcomplete.isConnected());
-            
-            if(resultK == resultPcomplete) std::cout << "\nPrim and Kruskal give EQUAL MST\n\n";
-            else  std::cout << "\nPrim and Kruskal give DIFFERENT MST\n\n";
-        }
-    }
-
-    template<typename TV, typename TE>
-    void TestBFS(UnDirectedGraph<TV, TE> &graph, int i, std::string id, bool complete){
-        std::cout << "\n----------------Graph " << i << "---------------\n";
-        graph.display();
-        
-        std::cout << "\n-----------BFS Test " << i << "(\"" << id << "\")-----------\n";
-        BFS<char, int> bfs(&graph);
-        UnDirectedGraph<char, int> res0 = bfs.u_apply(id);
-        res0.display();
-        isConnectedMsg(res0.isConnected());
-        
-        if(complete){
-            std::cout << "\n------------BFS Full " << i << "------------\n";
-            UnDirectedGraph<char, int> res1 = bfs.u_apply();
-            res1.display();
-            isConnectedMsg(res1.isConnected());
-
-            if(res0 == res1) std::cout << "\nBFS from " << id << " and full BFS give same trees\n\n";
-            else  std::cout << "\nBFS from " << id << " and full BFS give different trees\n\n";
-        }
-    }
-
-    template<typename TV, typename TE>
-    void TestBFS(DirectedGraph<TV, TE> &graph, int i, std::string id, bool complete){
-        std::cout << "\n----------------Graph " << i << "---------------\n";
-        graph.display();
-        
-        std::cout << "\n-----------BFS Test " << i << "(\"" << id << "\")-----------\n";
-        BFS<char, int> bfs(&graph);
-        DirectedGraph<char, int> res0 = bfs.d_apply(id);
-        res0.display();
-    }
-
-    template<typename TV, typename TE>
-    void TestDFS(UnDirectedGraph<TV, TE> &graph, int i, std::string id, bool complete){
-        std::cout << "\n----------------Graph " << i << "---------------\n";
-        graph.display();
-        
-        std::cout << "\n-----------DFS Test " << i << "(\"" << id << "\")-----------\n";
-        DFS<char, int> dfs(&graph);
-        UnDirectedGraph<char, int> res0 = dfs.u_apply(id);
-        res0.display();
-        isConnectedMsg(res0.isConnected());
-        
-        if(complete){
-            std::cout << "\n------------DFS Full " << i << "------------\n";
-            UnDirectedGraph<char, int> res1 = dfs.u_apply();
-            res1.display();
-            isConnectedMsg(res1.isConnected());
-
-            if(res0 == res1) std::cout << "\nDFS from " << id << " and full DFS give same trees\n\n";
-            else  std::cout << "\nDFS from " << id << " and full DFS give different trees\n\n";
-        }
-    }
-
-    template<typename TV, typename TE>
-    void TestDFS(DirectedGraph<TV, TE> &graph, int i, std::string id, bool complete){
-        std::cout << "\n----------------Graph " << i << "---------------\n";
-        graph.display();
-        
-        std::cout << "\n-----------DFS Test " << i << "(\"" << id << "\")-----------\n";
-        DFS<char, int> dfs(&graph);
-        DirectedGraph<char, int> res0 = dfs.d_apply(id);
-        res0.display();
-    }
-
-    template<typename TV, typename TE>
-    void TestCSS(DirectedGraph<TV, TE> &graph, int i){
-        std::cout << "\n----------------Graph " << i << "---------------\n";
-        graph.display();
-        
-        std::cout << "\n------------CSS Test " << i << "------------\n";
-        SCC<char, int> scc(&graph);
-        std::list<DirectedGraph<TV, TE>*> res0 = scc.apply();
-        char show;
-        std::cout << "\nDo you want to see the graphs? (Y/N): ";
-        std::cin >> show;
-        if(show == 'Y' || show == 'y'){
-            int i=0;
-            for(auto &graph : res0){
-                std::cout << "\nStrongly Connected Component " << i << ":\n";
-                graph->display();
-                ++i;
-            }
-        }
-    }
-
-    template<typename TV, typename TE>
-    void TestDijkstra(Graph<TV, TE> &graph, int i, std::string id){
-        std::cout << "\n----------------Graph " << i << "---------------\n";
-        graph.display();
-        
-        std::cout << "\n---------Dijkstra Test " << i << "----------\n";
-        Dijkstra<char, int> dijkstra(&graph);
-        returnDijkstraType res0 = dijkstra.apply(id);
-        
-        std::cout << "\nResultado Dijkstra:\n";
-        for(auto p : res0){
-            if(p.second.first)
-                std::cout << "Vertex: " << p.first->data << " (Parent: " << p.second.first->data << "): " << p.second.second << "\n";
-            else
-                std::cout << "Vertex: " << p.first->data << " (Parent: NA): " << p.second.second << "\n";
-        }
-    }
-
-    template<typename TV, typename TE>
-    void TestAStar(Graph<TV, TE> &graph, int i, std::string idFrom, std::string idTo, std::unordered_map<std::string, TE> hn){
-        std::cout << "\n----------------Graph " << i << "---------------\n";
-        graph.display();
-        
-        std::cout << "\n-----------A* Test " << i << "------------\n";
-        AStar<char, int> astar(&graph);
-        returnAStarType res0 = astar.apply(idFrom, idTo, hn);
-        distanceUnorderedMapAStarType distances = res0.first;
-        parentUnorderedMapType parents = res0.second;
-        
-        std::cout << "\nResultado A*:\n";
-        for(auto p : distances)
-            std::cout << p.first->data << " -> G(n): " << p.second.first << " | F(n): " << p.second.second << " Parent: " << parents[p.first]->data << "\n";
-    }
-    
-    template<typename TV, typename TE>
-    void TestFloydWarshall(Graph<TV, TE> &graph, int i){
-        std::cout << "\n----------------Graph " << i << "---------------\n";
-        graph.display();
-        
-        std::cout << "\n-------FloydWarshall Test " << i << "--------\n";
-        FloydWarshall<char, int> floydwarshall(&graph);
-        returnFloydWarshallType res0 = floydwarshall.apply();
-        distanceMatrixType distances = res0.first;
-        pathMatrixType paths = res0.second;
-        int width = 12;
-        std::cout << "Distances: \n";
-        std::cout << std::setw(width) << " ";
-        for(auto i : distances) std::cout << std::setw(width) << i.first->data;  std::cout << "\n";
-        for(auto i : distances){
-            std::cout << std::setw(width) << i.first->data;
-            for(auto j : distances)
-                std::cout << std::setw(width) << distances[i.first][j.first];
-            std::cout << "\n";
-        }
-        std::cout << "\n\nPaths: \n";
-        std::cout << std::setw(width) << " ";
-        for(auto i : paths) std::cout << std::setw(width) << i.first->data;  std::cout << "\n";
-        for(auto i : paths){
-            std::cout << std::setw(width) << i.first->data;
-            for(auto j : paths)
-                if(paths[i.first][j.first])
-                    std::cout << std::setw(width) << paths[i.first][j.first]->data;
-                else
-                    std::cout << std::setw(width) << "-";
-            std::cout << "\n";
-        }std::cout << "\n\n";
-    }
-
-    template<typename TV, typename TE>
-    void TestBellmanFord(Graph<TV, TE> &graph, int i, std::string id){
-        std::cout << "\n----------------Graph " << i << "---------------\n";
-        graph.display();
-        
-        std::cout << "\n---------BellmanFord Test " << i << "----------\n";
-        BellmanFord<char, int> bellmanford(&graph);
-        returnBellmanFordType res0 = bellmanford.apply(id);
-        
-        std::cout << "\nResultado BellmanFord:\n";
-        //TODO: Print
     }
 }
 

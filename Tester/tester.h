@@ -22,9 +22,10 @@ namespace Menu{
     void Functions(UnDirectedGraph<char, int> &ugraph1, UnDirectedGraph<char, int> &ugraph2,
                    UnDirectedGraph<char, int> &ugraph3, DirectedGraph<char, int> &dgraph1,
                    DirectedGraph<char, int> &dgraph2);
-    void Examples(UnDirectedGraph<char, int> &ugraph1, UnDirectedGraph<char, int> &ugraph2,
+    void Algorithms(UnDirectedGraph<char, int> &ugraph1, UnDirectedGraph<char, int> &ugraph2,
                   UnDirectedGraph<char, int> &ugraph3, UnDirectedGraph<char, int> &ugraph4,
-                  DirectedGraph<char, int> &dgraph1, DirectedGraph<char, int> &dgraph2);
+                  DirectedGraph<char, int> &dgraph1, DirectedGraph<char, int> &dgraph2,
+                  DirectedGraph<char, int> &dgraph3);
     void parser(bool &cond, UnDirectedGraph<Airport, double> &graph, Parser &parser);
     template<typename TV, typename TE>
     void Creator(int &option, Graph<TV, TE>* &graph);
@@ -38,11 +39,11 @@ namespace Tester{
         Menu::Functions(ugraph1, ugraph2, ugraph3, dgraph1, dgraph2);
     }
 
-    void executeExamples(){
+    void executeAlgorithmsExamples(){
         UnDirectedGraph<char, int> ugraph1, ugraph2, ugraph3, ugraph4;
-        DirectedGraph<char, int> dgraph1, dgraph2;
-        graphAlgorithms(ugraph1, ugraph2, ugraph3, ugraph4, dgraph1, dgraph2);
-        Menu::Examples(ugraph1, ugraph2, ugraph3, ugraph4, dgraph1, dgraph2);
+        DirectedGraph<char, int> dgraph1, dgraph2, dgraph3;
+        graphAlgorithms(ugraph1, ugraph2, ugraph3, ugraph4, dgraph1, dgraph2, dgraph3);
+        Menu::Algorithms(ugraph1, ugraph2, ugraph3, ugraph4, dgraph1, dgraph2, dgraph3);
     }
 
     void executeParser(bool cond){
@@ -165,9 +166,10 @@ namespace Menu{
             }
         }while(option1 != 5);
     }
-    void Examples(UnDirectedGraph<char, int> &ugraph1, UnDirectedGraph<char, int> &ugraph2,
+    void Algorithms(UnDirectedGraph<char, int> &ugraph1, UnDirectedGraph<char, int> &ugraph2,
                   UnDirectedGraph<char, int> &ugraph3, UnDirectedGraph<char, int> &ugraph4,
-                  DirectedGraph<char, int> &dgraph1, DirectedGraph<char, int> &dgraph2){
+                  DirectedGraph<char, int> &dgraph1, DirectedGraph<char, int> &dgraph2,
+                  DirectedGraph<char, int> &dgraph3){
         int option;
         do{
             do{
@@ -187,11 +189,11 @@ namespace Menu{
                 std::cout << "\t13. Test CSS 2.\n";
                 std::cout << "\t14. Test Dijkstra 1.\n";
                 std::cout << "\t15. Test Dijkstra 2.\n";
-                std::cout << "\t16. Test Floyd Warshall 1.\n";
-                std::cout << "\t17. Test Floyd Warshall 2.\n";
-                std::cout << "\t18. Test Bellman Ford 1.\n";
-                std::cout << "\t19. Test Bellman Ford 2.\n";
-                std::cout << "\t20. Test AStar 1.\n";
+                std::cout << "\t16. Test AStar 1.\n";
+                std::cout << "\t17. Test Floyd Warshall 1.\n";
+                std::cout << "\t18. Test Floyd Warshall 2.\n";
+                std::cout << "\t19. Test Bellman Ford 1.\n";
+                std::cout << "\t20. Test Bellman Ford 2.\n";
                 std::cout << "\t21. Back\n";
                 std::cout << "\nSelect option: ";
                 option = validInt();
@@ -201,101 +203,98 @@ namespace Menu{
             
             switch(option){
                 case 1:{
+                    system(".\\img\\\"Test Algorithm\"\\\"UGraph 1\"\\\"MST-Red.PNG\"");
                     TestKruskalPrim(ugraph1, 1, "0", false);
                     pause();
                     break;
                 }
                 case 2:{
+                    system(".\\img\\\"Test Algorithm\"\\\"UGraph 2\"\\\"MST-Red.PNG\"");
                     TestKruskalPrim(ugraph2, 2, "H", false);
                     pause();
                     break;
                 }
                 case 3:{
+                    system(".\\img\\\"Test Algorithm\"\\\"UGraph 3\"\\\"MST-Red.PNG\"");
                     TestKruskalPrim(ugraph3, 3, "B", true);
                     pause();
                     break;
                 }
                 case 4:{
+                    system(".\\img\\\"Test Algorithm\"\\\"UGraph 1\"\\\"BFS(4)-Red.PNG\"");
                     TestBFS(ugraph1, 1, "4", false);
                     pause();
                     break;
                 }
                 case 5:{
+                    system(".\\img\\\"Test Algorithm\"\\\"UGraph 2\"\\\"BFS(A)-Red.PNG\"");
                     TestBFS(ugraph2, 2, "A", false);
                     pause();
                     break;
                 }
                 case 6:{
+                    system(".\\img\\\"Test Algorithm\"\\\"UGraph 3\"\\\"BFS(G)-Red.PNG\"");
+                    system(".\\img\\\"Test Algorithm\"\\\"UGraph 3\"\\\"BFS(complete)-Red.PNG\"");
                     TestBFS(ugraph3, 3, "G", true);
                     pause();
                     break;
                 }
                 case 7:{
+                    system(".\\img\\\"Test Algorithm\"\\\"DGraph 1\"\\\"BFS(A)-Red.PNG\"");
                     TestBFS(dgraph1, 4, "A", false);
                     pause();
                     break;
                 }
                 case 8:{
+                    system(".\\img\\\"Test Algorithm\"\\\"UGraph 1\"\\\"DFS(4)-Red.PNG\"");
                     TestDFS(ugraph1, 1, "4", false);
                     pause();
                     break;
                 }
                 case 9:{
+                    system(".\\img\\\"Test Algorithm\"\\\"UGraph 2\"\\\"DFS(A)-Red.PNG\"");
                     TestDFS(ugraph2, 2, "A", false);
                     pause();
                     break;
                 }
                 case 10:{
+                    system(".\\img\\\"Test Algorithm\"\\\"UGraph 3\"\\\"DFS(G)-Red.PNG\"");
+                    system(".\\img\\\"Test Algorithm\"\\\"UGraph 3\"\\\"DFS(complete)-Red.PNG\"");
                     TestDFS(ugraph3, 3, "G", true);
                     pause();
                     break;
                 }
                 case 11:{
+                    system(".\\img\\\"Test Algorithm\"\\\"DGraph 1\"\\\"DFS(A)-Red.PNG\"");
                     TestDFS(dgraph1, 4, "A", false);
                     pause();
                     break;
                 }
                 case 12:{
+                    system(".\\img\\\"Test Algorithm\"\\\"DGraph 1\"\\\"SCC-Red.PNG\"");
                     TestCSS(dgraph1, 1);
                     pause();
                     break;
                 }
                 case 13:{
+                    system(".\\img\\\"Test Algorithm\"\\\"DGraph 2\"\\\"SCC-Red.PNG\"");
                     TestCSS(dgraph2, 2);
                     pause();
                     break;
                 }
                 case 14:{
+                    system(".\\img\\\"Test Algorithm\"\\\"UGraph 2\"\\\"Djkstra(A)-Red.PNG\"");
                     TestDijkstra(ugraph2, 1, "A");
                     pause();
                     break;
                 }
                 case 15:{
+                    system(".\\img\\\"Test Algorithm\"\\\"DGraph 1\"\\\"Dijkstra(D)-Red.PNG\"");
                     TestDijkstra(dgraph1, 2, "D");
                     pause();
                     break;
                 }
                 case 16:{
-                    TestFloydWarshall(ugraph1, 1);
-                    pause();
-                    break;
-                }
-                case 17:{
-                    TestFloydWarshall(dgraph1, 2);
-                    pause();
-                    break;
-                }
-                case 18:{
-                    TestBellmanFord(ugraph1, 1, "2");
-                    pause();
-                    break;
-                }
-                case 19:{
-                    TestBellmanFord(dgraph1, 2, "A");
-                    pause();
-                    break;
-                }
-                case 20:{
                     std::unordered_map<std::string, int> hn;
                     hn["A"] = 36;
                     hn["B"] = 39;
@@ -306,8 +305,32 @@ namespace Menu{
                     hn["G"] = 21;
                     hn["H"] = 19;
                     hn["I"] = 0;
-
+                    system(".\\img\\\"Test Algorithm\"\\\"UGraph 4\"\\\"Graph 4 - AStar result.PNG\"");
                     TestAStar(ugraph4, 1, "A", "I", hn);
+                    pause();
+                    break;
+                }
+                case 17:{
+                    system(".\\img\\\"Test Algorithm\"\\\"UGraph 1\"\\\"FloydWarshall Result.PNG\"");
+                    TestFloydWarshall(ugraph1, 1);
+                    pause();
+                    break;
+                }
+                case 18:{
+                    system(".\\img\\\"Test Algorithm\"\\\"DGraph 1\"\\\"FloydWarshall Result.PNG\"");
+                    TestFloydWarshall(dgraph1, 2);
+                    pause();
+                    break;
+                }
+                case 19:{
+                    system(".\\img\\\"Test Algorithm\"\\\"UGraph 2\"\\\"Djkstra(A)-Red.PNG\"");
+                    TestBellmanFord(ugraph2, 1, "A");
+                    pause();
+                    break;
+                }
+                case 20:{
+                    system(".\\img\\\"Test Algorithm\"\\\"DGraph 3\"\\\"Graph 6.PNG\"");
+                    TestBellmanFord(dgraph3, 2, "A");
                     pause();
                     break;
                 }

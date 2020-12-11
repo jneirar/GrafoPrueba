@@ -194,25 +194,23 @@ void TestFloydWarshall(Graph<TV, TE> &graph, int i){
     distanceMatrixType distances = res0.first;
     pathMatrixType paths = res0.second;
     int width = 12;
+
     std::cout << "Distances: \n";
     std::cout << std::setw(width) << " ";
-    for(auto i : distances) std::cout << std::setw(width) << i.first->data;  std::cout << "\n";
+    for(auto i : distances) std::cout << std::setw(width) << i.first;  std::cout << "\n";
     for(auto i : distances){
-        std::cout << std::setw(width) << i.first->data;
+        std::cout << std::setw(width) << i.first;
         for(auto j : distances)
             std::cout << std::setw(width) << distances[i.first][j.first];
         std::cout << "\n";
     }
     std::cout << "\n\nPaths: \n";
     std::cout << std::setw(width) << " ";
-    for(auto i : paths) std::cout << std::setw(width) << i.first->data;  std::cout << "\n";
+    for(auto i : paths) std::cout << std::setw(width) << i.first;  std::cout << "\n";
     for(auto i : paths){
-        std::cout << std::setw(width) << i.first->data;
+        std::cout << std::setw(width) << i.first;
         for(auto j : paths)
-            if(paths[i.first][j.first])
-                std::cout << std::setw(width) << paths[i.first][j.first]->data;
-            else
-                std::cout << std::setw(width) << "-";
+            std::cout << std::setw(width) << paths[i.first][j.first];
         std::cout << "\n";
     }std::cout << "\n\n";
 }
@@ -225,7 +223,14 @@ void TestBellmanFord(Graph<TV, TE> &graph, int i, std::string id){
     std::cout << "\n---------BellmanFord Test " << i << "----------\n";
     BellmanFord<char, int> bellmanford(&graph);
     returnBellmanFordType res0 = bellmanford.apply(id);
-    
+    parentUnorderedMapType parents = res0.first;
+    distanceUnorderedMapType distances = res0.second;
+
     std::cout << "\nResultado BellmanFord:\n";
-    //TODO: Print
+    for(auto p : parents){
+        if(p.second)
+            std::cout << "Vertex: " << p.first->data << " (Parent: " << p.second->data << "): " << distances[p.first] << "\n";
+        else
+            std::cout << "Vertex: " << p.first->data << " (Parent: NA): " << distances[p.first] << "\n";
+    }
 }

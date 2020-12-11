@@ -66,7 +66,8 @@ void graphAlgorithms(UnDirectedGraph<char, int> &ugraph1,
                     UnDirectedGraph<char, int> &ugraph3, 
                     UnDirectedGraph<char, int> &ugraph4, 
                     DirectedGraph<char, int> &dgraph1,
-                    DirectedGraph<char, int> &dgraph2){
+                    DirectedGraph<char, int> &dgraph2,
+                    DirectedGraph<char, int> &dgraph3){
     
     ugraph1.insertVertex("0", '0');
     ugraph1.insertVertex("1", '1');
@@ -205,4 +206,14 @@ void graphAlgorithms(UnDirectedGraph<char, int> &ugraph1,
     dgraph2.createEdge("G", "F", 1);
     dgraph2.createEdge("H", "D", 1);
     dgraph2.createEdge("H", "G", 1);
+
+    dgraph3.insertVertex("A", 'A');
+    dgraph3.insertVertex("B", 'B');
+    dgraph3.insertVertex("C", 'C');
+    dgraph3.insertVertex("D", 'D');
+    dgraph3.createEdge("A", "B", 1);
+    dgraph3.createEdge("B", "C", 3);
+    dgraph3.createEdge("C", "D", 2);
+    dgraph3.createEdge("D", "B", -6);
+    
 }

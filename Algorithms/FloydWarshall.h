@@ -32,15 +32,14 @@ FloydWarshall<TV, TE>::FloydWarshall(Graph<TV, TE>* graph){
 template<typename TV, typename TE>
 void FloydWarshall<TV, TE>::FloydWarshallAlgorithm(distanceMatrixType &distances, pathMatrixType &paths){
     TE maxVal = INF;
-    for(auto k : this->vertexes){
-        //k.second es el vertice
-        for(auto i : this->vertexes){
-            for(auto j : this->vertexes){
-                if(i.second->id != k.second->id && j.second->id != k.second->id){
-                    if(distances[i.second][k.second] != maxVal && distances[k.second][j.second] != maxVal){
-                        if(distances[i.second][k.second] + distances[k.second][j.second] < distances[i.second][j.second]){
-                            distances[i.second][j.second] = distances[i.second][k.second] + distances[k.second][j.second];
-                            paths[i.second][j.second] = k.second;
+    for(auto k : distances){
+        for(auto i : distances){
+            for(auto j : distances){
+                if(i.first != k.first && j.first != k.first){
+                    if(distances[i.first][k.first] != maxVal && distances[k.first][j.first] != maxVal){
+                        if(distances[i.first][k.first] + distances[k.first][j.first] < distances[i.first][j.first]){
+                            distances[i.first][j.first] = distances[i.first][k.first] + distances[k.first][j.first];
+                            paths[i.first][j.first] = k.first;
                         }
                     }
                 }
@@ -55,16 +54,16 @@ returnFloydWarshallType FloydWarshall<TV, TE>::apply(){
     pathMatrixType paths;
     for(auto i : this->vertexes){
         for(auto j : this->vertexes){
-            if(i.second == j.second)  distances[i.second][j.second] = 0;
-            else    distances[i.second][j.second] = INF;
-            if(i.second == j.second)  paths[i.second][j.second] = nullptr;
-            else    paths[i.second][j.second] = i.second;
+            if(i.second->id == j.second->id)  distances[i.second->id][j.second->id] = 0;
+            else    distances[i.second->id][j.second->id] = INF;
+            if(i.second->id == j.second->id)  paths[i.second->id][j.second->id] = "-";
+            else    paths[i.second->id][j.second->id] = i.second->id;
         }
     }
 
     for(auto p : this->vertexes)    
         for(Edge<TV, TE>* edge : p.second->edges)   
-            distances[edge->vertexes[0]][edge->vertexes[1]] = edge->weight;
+            distances[edge->vertexes[0]->id][edge->vertexes[1]->id] = edge->weight;
 
     FloydWarshallAlgorithm(distances, paths);
 

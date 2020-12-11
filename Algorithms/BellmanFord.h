@@ -32,10 +32,11 @@ BellmanFord<TV, TE>::BellmanFord(Graph<TV, TE>* graph){
 
 template<typename TV, typename TE>
 bool BellmanFord<TV, TE>::BellmanFordRelax(distanceUnorderedMapType &distances, parentUnorderedMapType &parents, std::vector<std::string> order){
+    TE maxVal = INF;
     bool flag = false;
     for(std::string id : order){
         for(Edge<TV, TE>* edge : this->vertexes[id]->edges){
-            if(distances[edge->vertexes[0]] + edge->weight < distances[edge->vertexes[1]]){
+            if(distances[edge->vertexes[0]] != maxVal && distances[edge->vertexes[0]] + edge->weight < distances[edge->vertexes[1]]){
                 distances[edge->vertexes[1]] = distances[edge->vertexes[0]] + edge->weight;
                 parents[edge->vertexes[1]] = edge->vertexes[0];
                 flag = true;
@@ -48,8 +49,9 @@ bool BellmanFord<TV, TE>::BellmanFordRelax(distanceUnorderedMapType &distances, 
 template<typename TV, typename TE>
 void BellmanFord<TV, TE>::BellmanFordAlgorithm(distanceUnorderedMapType &distances, parentUnorderedMapType &parents, std::vector<std::string> order){
     TE maxVal = INF;
-    for(int i=1; i<this->vertexes.size(); ++i)
-        if(BellmanFordRelax(distances, parents, order)) break;
+    for(int i=1; i<this->vertexes.size(); ++i){
+        if(!BellmanFordRelax(distances, parents, order)) break;
+    }
         
     if(BellmanFordRelax(distances, parents, order))
         std::cout << "\n.......¡Negative cycle found!.......\n";
@@ -62,7 +64,7 @@ returnBellmanFordType BellmanFord<TV, TE>::apply(std::string id){
 
     if(!this->vertexes.count(id)){
         std::cout << "ERROR: ID not found.\n";
-        return std::make_pair(distances, parents);
+        return std::make_pair(parents, distances);
     }
 
     std::cout << "\nBellman Ford from vertex: " << this->vertexes[id]->data << "\n";
@@ -76,10 +78,9 @@ returnBellmanFordType BellmanFord<TV, TE>::apply(std::string id){
         parents[p.second] = nullptr;
         if(p.first != id)   order.push_back(p.first);
     }
-
+    
     BellmanFordAlgorithm(distances, parents, order);
-
-    return std::make_pair(distances, parents);
+    return std::make_pair(parents, distances);
 }
 
 #endif

@@ -24,8 +24,8 @@
 #define NOMINMAX
 #endif
 
-#define distanceMatrixType std::unordered_map<Vertex<TV, TE>*, std::unordered_map<Vertex<TV, TE>*, TE>>
-#define pathMatrixType std::unordered_map<Vertex<TV, TE>*, std::unordered_map<Vertex<TV, TE>*, Vertex<TV, TE>*>>
+#define distanceMatrixType std::map<std::string, std::map<std::string, TE>>
+#define pathMatrixType std::map<std::string, std::map<std::string, std::string>>
 #define returnFloydWarshallType std::pair<distanceMatrixType, pathMatrixType>
 
 #define distanceUnorderedMapType std::unordered_map<Vertex<TV, TE>*, TE>
@@ -34,7 +34,7 @@
 
 #define returnDijkstraType std::pair<parentUnorderedMapType, distanceUnorderedMapType>
 #define returnAStarType std::pair<distanceUnorderedMapAStarType, parentUnorderedMapType>
-#define returnBellmanFordType std::pair<distanceUnorderedMapType, parentUnorderedMapType>
+#define returnBellmanFordType std::pair<parentUnorderedMapType, distanceUnorderedMapType>
 
 bool check(int option, int inf, int sup){
     return option >= inf && option <= sup;

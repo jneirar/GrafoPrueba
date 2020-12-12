@@ -459,11 +459,20 @@ namespace Menu{
                 std::cout << "\t10. Apply Kruskal. \n";
                 std::cout << "\t11. Apply Prim.\n";
                 std::cout << "\t12. Apply Kruskal and Prim.\n";
-                std::cout << "\t13. Back.\n";
+                std::cout << "\t13. Apply BFS.\n";
+                std::cout << "\t14. Apply BFS Full.\n";
+                std::cout << "\t15. Apply DFS.\n";
+                std::cout << "\t16. Apply DFS Full.\n";
+                std::cout << "\t17. Apply Dijkstra.\n";
+                std::cout << "\t18. Apply A*.\n";
+                std::cout << "\t19. Apply Bellman-Ford.\n";
+                std::cout << "\t20. Apply Floyd-Warshall.\n";
+                std::cout << "\t21. Apply Strongly Connected Components.\n";
+                std::cout << "\t22. Back.\n";
                 std::cout << "\nSelect option: ";
                 option1 = validInt();
                 console_clear();
-            }while(!check(option1, 1, 13));
+            }while(!check(option1, 1, 22));
             
             menu5();
             switch(option1){
@@ -636,10 +645,107 @@ namespace Menu{
                     pause();
                     break;
                 }
+                case 13:{
+                    std::cout << "\n-----------BFS-----------\n\n";
+                    graph->display();
+                    std::string id;
+                    std::cout << "\nInsert ID: ";
+                    std::cin >> id;
+                    TestBFS(graph, 0, id, false);
+                    pause();
+                    break;
+                }
+                case 14:{
+                    std::cout << "\n-----------BFS complete-----------\n\n";
+                    graph->display();
+                    std::string id;
+                    std::cout << "\nInsert ID: ";
+                    std::cin >> id;
+                    TestBFS(graph, 0, id, true);
+                    pause();
+                    break;
+                }
+                case 15:{
+                    std::cout << "\n-----------DFS-----------\n\n";
+                    graph->display();
+                    std::string id;
+                    std::cout << "\nInsert ID: ";
+                    std::cin >> id;
+                    TestDFS(graph, 0, id, false);
+                    pause();
+                    break;
+                }
+                case 16:{
+                    std::cout << "\n-----------DFS complete-----------\n\n";
+                    graph->display();
+                    std::string id;
+                    std::cout << "\nInsert ID: ";
+                    std::cin >> id;
+                    TestDFS(graph, 0, id, true);
+                    pause();
+                    break;
+                }
+                case 17:{
+                    std::cout << "\n-----------Dijkstra-----------\n\n";
+                    graph->display();
+                    std::string id;
+                    std::cout << "\nInsert ID: ";
+                    std::cin >> id;
+                    TestDijkstra(graph, 0, id);
+                    pause();
+                    break;
+                }
+                case 18:{
+                    std::cout << "\n-----------A*-----------\n\n";
+                    graph->display();
+                    std::string idFrom, idTo;
+                    std::cout << "\nInsert origin's ID and destiny's ID: ";
+                    std::cin >> idFrom >> idTo;
+                    
+                    std::cout << "\nInsert heuristic for each ID: ";
+                    std::unordered_map<std::string, int> heuristic;
+                    int vertexes = graph->numberOfVertexes();
+                    std::string id;
+                    int distance;
+                    for(int i=1; i <= vertexes; ++i){
+                        std::cout << "\n\tInsert ID and distance (" << i << "): ";
+                        cin >> id >> distance;
+                        heuristic[id] = distance;
+                    }
+                    TestAStar(graph, 0, idFrom, idTo, std::unordered_map<std::string, TE> heuristic){
+                    pause();
+                    break;
+                }
+                case 19:{
+                    std::cout << "\n-----------Bellman Ford-----------\n\n";
+                    graph->display();
+                    std::string id;
+                    std::cout << "\nInsert ID: ";
+                    std::cin >> id;
+                    TestBellmanFord(graph, 0, id);
+                    pause();
+                    break;
+                }
+                case 20:{
+                    std::cout << "\n-----------Floyd Warshall-----------\n\n";
+                    TestFloydWarshall(graph, 0);
+                    pause();
+                    break;
+                }
+                case 21:{
+                    std::cout << "\n-----------Strongly Connected Components-----------\n\n";
+                    if(option == 1){
+                        std::cout << "This algorithm requires a directed grpah.\n";
+                        break;
+                    }
+                    TestCSS(graph, 0);
+                    pause();
+                    break;
+                }
                 default:
                     break;
             }    
-        }while(option1 != 13);
+        }while(option1 != 22);
     }
 }
 

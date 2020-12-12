@@ -35,6 +35,7 @@
 #define returnDijkstraType std::pair<parentUnorderedMapType, distanceUnorderedMapType>
 #define returnAStarType std::pair<distanceUnorderedMapAStarType, parentUnorderedMapType>
 #define returnBellmanFordType std::pair<parentUnorderedMapType, distanceUnorderedMapType>
+#define returnSCCType std::list<DirectedGraph<TV, TE>*>
 
 bool check(int option, int inf, int sup){
     return option >= inf && option <= sup;

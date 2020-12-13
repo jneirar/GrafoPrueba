@@ -45,6 +45,7 @@ void Parser::readJSON(){
         double longitude = 0.0, latitude = 0.0;
         std::string strLongitude = p["Longitude"].get<std::string>();
         std::string strLatitude = p["Latitude"].get<std::string>();
+        //TODO: considerar casos GVSF, EGCN y otros posibles mas
         if(strLongitude != "GVNP") longitude = atof(strLongitude.c_str());
         if(strLatitude != "GVNP") latitude = atof(strLatitude.c_str());
 

@@ -41,6 +41,7 @@ void TestKruskalPrim(UnDirectedGraph<TV, TE> &graph, int i, std::string id, bool
     resultK.display(); 
     isConnectedMsg(resultK.isConnected());
 
+    //TODO: revisar implementacion
     std::cout << "\n-----------Prim Test " << i << "(\"" << id << "\")-----------\n";
     Prim<char, int> prim(&graph);
     UnDirectedGraph<char, int> resultP = prim.apply(id);

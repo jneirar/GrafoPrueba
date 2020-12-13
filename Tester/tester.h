@@ -48,8 +48,8 @@ namespace Tester{
 
     void executeParser(bool cond){
         std::string path;
-        if(cond)  path = "Parser/Data/pe.json";
-        else  path = "Parser/Data/airports.json";
+        if(cond)  path = "../Parser/Data/pe.json";
+        else  path = "../Parser/Data/airports.json";
         
         std::cout << "Please wait while the graph is created ...\n";
         
@@ -161,10 +161,27 @@ namespace Menu{
 
                     pause();
                     break;
+                case 5:
+                    std::cout << "---------isWeaklyConnected---------\n";
+                    std::cout << "\nDirectedGraph 1\n";
+                    dgraph1.display();
+                    std::cout << "\nisWeaklyConnected: ";
+                    if(dgraph1.isWeaklyConnected()) std::cout << "YES\n";
+                    else  std::cout << "NO\n";
+
+                    std::cout << "\nDirectedGraph 2\n";
+                    dgraph2.display();
+                    std::cout << "\nisWeaklyConnected: ";
+                    if(dgraph2.isWeaklyConnected()) std::cout << "YES\n";
+                    else  std::cout << "NO\n";
+
+                    pause();
+                    break;
+
                 default:
                     break;
             }
-        }while(option1 != 5);
+        }while(option1 != 6);
     }
     void Algorithms(UnDirectedGraph<char, int> &ugraph1, UnDirectedGraph<char, int> &ugraph2,
                   UnDirectedGraph<char, int> &ugraph3, UnDirectedGraph<char, int> &ugraph4,
@@ -203,7 +220,9 @@ namespace Menu{
             
             switch(option){
                 case 1:{
-                    system(".\\img\\\"Test Algorithm\"\\\"UGraph 1\"\\\"MST-Red.PNG\"");
+//                    system(".\\img\\\"Test Algorithm\"\\\"UGraph 1\"\\\"MST-Red.PNG\"");
+                    system("xdg-open ../img/MST-Red.PNG");
+//                    open_image("img\\\"Test Algorithm\"\\\"UGraph 1\"\\\"MST-Red.PNG\"");
                     TestKruskalPrim(ugraph1, 1, "0", false);
                     pause();
                     break;

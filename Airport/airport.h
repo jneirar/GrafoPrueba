@@ -36,6 +36,8 @@ public:
         this->latitude = o.latitude;
         return *this;
     }
+
+    //TODO: Usar una funcion para retornar la distancia en kilometros
     double operator-(const Airport& o){
         return sqrt((this->longitude - o.longitude)*(this->longitude - o.longitude) + (this->latitude - o.latitude)*(this->latitude - o.latitude));
     }

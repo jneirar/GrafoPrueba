@@ -14,6 +14,7 @@ public:
     bool isStronglyConnected() override;
     bool isBipartite() override;
     void display() override;
+    bool isWeaklyConnected();
 };
 
 
@@ -76,6 +77,31 @@ bool DirectedGraph<TV, TE>::isStronglyConnected(){
             complementGraph.createEdge(ids[e->vertexes[1]], ids[e->vertexes[0]], e->weight);
     if(!complementGraph.BFSisConnected(id)) return false;
     return true;
+}
+
+template<typename TV, typename TE>
+bool DirectedGraph<TV, TE>::isWeaklyConnected(){
+    // DFS ignoring edge directions and test if you have visited all the vertices.
+    // Check if its connected
+    // if not return false
+    // else return true
+    if(this->vertexes.empty()) throw std::runtime_error("RUNTIME ERROR: Graph is empty.");
+
+    std::unordered_map<Vertex<TV,TE>*, bool> visited;
+    for(auto v: this->vertexes) visited[v.second] = false;
+
+    for(auto v: this->vertexes){
+
+        if(v.second->edges.empty()) continue;
+        for(auto edge : v.second->edges){
+            visited[edge->vertexes[0]] = true;
+            visited[edge->vertexes[1]] = true;
+        }
+    }
+
+    for(auto p : visited) if(!p.second) return false;
+    return true;
+
 }
 
 template<typename TV, typename TE>

@@ -21,7 +21,7 @@ void showGraph(UnDirectedGraph<TV, TE> &graph){
 namespace Menu{
     void Functions(UnDirectedGraph<char, int> &ugraph1, UnDirectedGraph<char, int> &ugraph2,
                    UnDirectedGraph<char, int> &ugraph3, DirectedGraph<char, int> &dgraph1,
-                   DirectedGraph<char, int> &dgraph2);
+                   DirectedGraph<char, int> &dgraph2, DirectedGraph<char, int> &dgraph3);
     void Algorithms(UnDirectedGraph<char, int> &ugraph1, UnDirectedGraph<char, int> &ugraph2,
                   UnDirectedGraph<char, int> &ugraph3, UnDirectedGraph<char, int> &ugraph4,
                   DirectedGraph<char, int> &dgraph1, DirectedGraph<char, int> &dgraph2,
@@ -34,9 +34,9 @@ namespace Menu{
 namespace Tester{
     void executeFunctionExamples(){
         UnDirectedGraph<char, int> ugraph1, ugraph2, ugraph3;
-        DirectedGraph<char, int> dgraph1, dgraph2;
-        graphFunctions(ugraph1, ugraph2, ugraph3, dgraph1, dgraph2);
-        Menu::Functions(ugraph1, ugraph2, ugraph3, dgraph1, dgraph2);
+        DirectedGraph<char, int> dgraph1, dgraph2, dgraph3;
+        graphFunctions(ugraph1, ugraph2, ugraph3, dgraph1, dgraph2, dgraph3);
+        Menu::Functions(ugraph1, ugraph2, ugraph3, dgraph1, dgraph2, dgraph3);
     }
 
     void executeAlgorithmsExamples(){
@@ -48,8 +48,8 @@ namespace Tester{
 
     void executeParser(bool cond){
         std::string path;
-        if(cond)  path = "Parser/Data/pe.json";
-        else  path = "Parser/Data/airports.json";
+        if(cond)  path = "../Parser/Data/pe.json";
+        else  path = "../Parser/Data/airports.json";
         
         std::cout << "Please wait while the graph is created ...\n";
         
@@ -89,7 +89,7 @@ namespace Tester{
 namespace Menu{
     void Functions(UnDirectedGraph<char, int> &ugraph1, UnDirectedGraph<char, int> &ugraph2,
                    UnDirectedGraph<char, int> &ugraph3, DirectedGraph<char, int> &dgraph1,
-                   DirectedGraph<char, int> &dgraph2){
+                   DirectedGraph<char, int> &dgraph2, DirectedGraph<char, int> &dgraph3){
         int option1;
         do{
             option1 = menu1();
@@ -161,10 +161,27 @@ namespace Menu{
 
                     pause();
                     break;
+                case 5:
+                    std::cout << "---------isWeaklyConnected---------\n";
+                    std::cout << "\nDirectedGraph 1\n";
+                    dgraph1.display();
+                    std::cout << "\nisWeaklyConnected: ";
+                    if(dgraph1.isWeaklyConnected()) std::cout << "YES\n";
+                    else  std::cout << "NO\n";
+
+                    std::cout << "\nDirectedGraph 2\n";
+                    dgraph3.display();
+                    std::cout << "\nisWeaklyConnected: ";
+                    if(dgraph3.isWeaklyConnected()) std::cout << "YES\n";
+                    else  std::cout << "NO\n";
+
+                    pause();
+                    break;
+
                 default:
                     break;
             }
-        }while(option1 != 5);
+        }while(option1 != 6);
     }
     void Algorithms(UnDirectedGraph<char, int> &ugraph1, UnDirectedGraph<char, int> &ugraph2,
                   UnDirectedGraph<char, int> &ugraph3, UnDirectedGraph<char, int> &ugraph4,
@@ -204,6 +221,8 @@ namespace Menu{
             switch(option){
                 case 1:{
                     system(".\\img\\\"Test Algorithm\"\\\"UGraph 1\"\\\"MST-Red.PNG\"");
+//                    system("xdg-open ../img/MST-Red.PNG");
+//                    open_image("img\\\"Test Algorithm\"\\\"UGraph 1\"\\\"MST-Red.PNG\"");
                     TestKruskalPrim(ugraph1, 1, "0", false);
                     pause();
                     break;

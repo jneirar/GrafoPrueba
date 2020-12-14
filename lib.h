@@ -53,6 +53,15 @@ void console_clear(){
   #endif
 }
 
+void open_image(const char img_path[]){
+    #ifdef _WIN32
+        system(".\\" + img_path);
+    #else
+        system(&"xdg-open" [ *img_path]);
+    #endif
+}
+
+
 void isConnectedMsg(bool cond){
     if(cond) std::cout << "\nIs Connected\n";
     else std::cout << "\nIs Disconnected\n";
@@ -109,11 +118,12 @@ int menu1(){
         std::cout << "\t2. Test isConnected in Undirected Graph.\n";
         std::cout << "\t3. Test isStronglyConnected in Directed Graph.\n";
         std::cout << "\t4. Test isBipartite.\n";
-        std::cout << "\t5. Back\n";
+        std::cout << "\t5. Test isWeaklyConnected in Directed Graph.\n";
+        std::cout << "\t6. Back\n";
         std::cout << "\nSelect option: ";
         option = validInt();
         console_clear();
-    }while(!check(option, 1, 5));
+    }while(!check(option, 1, 6));
     return option;
 }
 

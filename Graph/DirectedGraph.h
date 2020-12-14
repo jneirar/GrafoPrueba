@@ -87,21 +87,17 @@ bool DirectedGraph<TV, TE>::isWeaklyConnected(){
     // else return true
     if(this->vertexes.empty()) throw std::runtime_error("RUNTIME ERROR: Graph is empty.");
 
-    std::unordered_map<Vertex<TV,TE>*, bool> visited;
-    for(auto v: this->vertexes) visited[v.second] = false;
+    UnDirectedGraph<TV,TE> ugraph1;
 
-    for(auto v: this->vertexes){
+    for(auto u: this->vertexes) ugraph1.insertVertex(u.first, u.second->data);
 
-        if(v.second->edges.empty()) continue;
-        for(auto edge : v.second->edges){
-            visited[edge->vertexes[0]] = true;
-            visited[edge->vertexes[1]] = true;
+    for(auto u: this->vertexes){
+        for(auto edge : u.second->edges){
+            ugraph1.createEdge(edge->vertexes[0]->id, edge->vertexes[1]->id, edge->weight);
         }
     }
 
-    for(auto p : visited) if(!p.second) return false;
-    return true;
-
+    return ugraph1.isConnected();
 }
 
 template<typename TV, typename TE>

@@ -21,7 +21,7 @@ void showGraph(UnDirectedGraph<TV, TE> &graph){
 namespace Menu{
     void Functions(UnDirectedGraph<char, int> &ugraph1, UnDirectedGraph<char, int> &ugraph2,
                    UnDirectedGraph<char, int> &ugraph3, DirectedGraph<char, int> &dgraph1,
-                   DirectedGraph<char, int> &dgraph2);
+                   DirectedGraph<char, int> &dgraph2, DirectedGraph<char, int> &dgraph3);
     void Algorithms(UnDirectedGraph<char, int> &ugraph1, UnDirectedGraph<char, int> &ugraph2,
                   UnDirectedGraph<char, int> &ugraph3, UnDirectedGraph<char, int> &ugraph4,
                   DirectedGraph<char, int> &dgraph1, DirectedGraph<char, int> &dgraph2,
@@ -34,9 +34,9 @@ namespace Menu{
 namespace Tester{
     void executeFunctionExamples(){
         UnDirectedGraph<char, int> ugraph1, ugraph2, ugraph3;
-        DirectedGraph<char, int> dgraph1, dgraph2;
-        graphFunctions(ugraph1, ugraph2, ugraph3, dgraph1, dgraph2);
-        Menu::Functions(ugraph1, ugraph2, ugraph3, dgraph1, dgraph2);
+        DirectedGraph<char, int> dgraph1, dgraph2, dgraph3;
+        graphFunctions(ugraph1, ugraph2, ugraph3, dgraph1, dgraph2, dgraph3);
+        Menu::Functions(ugraph1, ugraph2, ugraph3, dgraph1, dgraph2, dgraph3);
     }
 
     void executeAlgorithmsExamples(){
@@ -89,7 +89,7 @@ namespace Tester{
 namespace Menu{
     void Functions(UnDirectedGraph<char, int> &ugraph1, UnDirectedGraph<char, int> &ugraph2,
                    UnDirectedGraph<char, int> &ugraph3, DirectedGraph<char, int> &dgraph1,
-                   DirectedGraph<char, int> &dgraph2){
+                   DirectedGraph<char, int> &dgraph2, DirectedGraph<char, int> &dgraph3){
         int option1;
         do{
             option1 = menu1();
@@ -170,9 +170,9 @@ namespace Menu{
                     else  std::cout << "NO\n";
 
                     std::cout << "\nDirectedGraph 2\n";
-                    dgraph2.display();
+                    dgraph3.display();
                     std::cout << "\nisWeaklyConnected: ";
-                    if(dgraph2.isWeaklyConnected()) std::cout << "YES\n";
+                    if(dgraph3.isWeaklyConnected()) std::cout << "YES\n";
                     else  std::cout << "NO\n";
 
                     pause();
@@ -220,8 +220,8 @@ namespace Menu{
             
             switch(option){
                 case 1:{
-//                    system(".\\img\\\"Test Algorithm\"\\\"UGraph 1\"\\\"MST-Red.PNG\"");
-                    system("xdg-open ../img/MST-Red.PNG");
+                    system(".\\img\\\"Test Algorithm\"\\\"UGraph 1\"\\\"MST-Red.PNG\"");
+//                    system("xdg-open ../img/MST-Red.PNG");
 //                    open_image("img\\\"Test Algorithm\"\\\"UGraph 1\"\\\"MST-Red.PNG\"");
                     TestKruskalPrim(ugraph1, 1, "0", false);
                     pause();
